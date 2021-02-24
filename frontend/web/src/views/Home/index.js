@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './styles';
+
+// Configs de comm com api backend
+import api from '../../services/api';
 
 // Componentes:
 import Header from '../../components/Header';
@@ -9,8 +12,20 @@ import GraphCard from '../../components/GraphCard';
 import TaskCard from '../../components/TaskCard';
 
 function Home() {
-    var [filterActive, setFilterActive] = useState('today');
-    // return <h1> Você está HOME!</h1>
+    const [filterActive, setFilterActive] = useState('day');
+    const [tasks, setTasks] = useState([]);
+
+    async function loadTasks(){
+        await api.get(`/task/filter/${filterActive}/11:0a:11:11:11:11`)
+                 .then(response => {
+                        setTasks(response.data)
+                 })
+    }
+
+    useEffect(() => {
+        loadTasks();
+    }, [filterActive]) 
+
     return (
         
         <S.Container>
@@ -49,30 +64,12 @@ function Home() {
             </S.Title>
 
             <S.Content>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
+                {
+                    tasks.map(t => (
+                        <TaskCard type={t.type} title={t.title} when={t.when}/>                           
+                    ))
+                }
+                
             </S.Content>
             
             <Footer/>

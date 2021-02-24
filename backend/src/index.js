@@ -1,7 +1,10 @@
 const express = require('express')
 const server = express();
 
+const cors = require('cors');
+
 // para api receber e entregar info em json:
+server.use(cors());
 server.use(express.json());
 
 // server.get('/teste', (req,res) => {
@@ -14,6 +17,6 @@ const TaskRoutes = require('./routes/TaskRoutes');
 //injetando TaskRoutes.js na api
 server.use('/task',TaskRoutes)
 
-server.listen(3000, () => {
+server.listen(3333, () => {
     console.log('API ONLINE');
 });
