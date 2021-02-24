@@ -4,10 +4,12 @@ Productivity app project
 
 ## Links for Adobe XD prototype:
 
-- [Web version](https://xd.adobe.com/view/f2744ccc-9be0-4331-9098-d1033c24e7f9-a727/)
-![website](https://github.com/Alexandre-Caldeira/momentum/blob/master/web_frontend.png?raw=true)
+- [Website live prototype](https://xd.adobe.com/view/f2744ccc-9be0-4331-9098-d1033c24e7f9-a727/)
 
-- Mobile version on /frontend/prototipo_mob_e_assets
+![](https://raw.githubusercontent.com/Alexandre-Caldeira/momentum/main/web_frontend.png)
+
+- Mobile version prototype on /frontend/prototipo_mob_e_assets
+
 
 
 ## How to run this app:
@@ -26,3 +28,4 @@ cd frontend
 npm install 
 npm start
 ```
+
