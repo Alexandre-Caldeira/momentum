@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+//TODO:
+// Change to position: relative + left: X px; bottom: X px; 
+// for filter icon and text;
+
 export const Container = styled.div `
     width: 200px; 
     height: 60px;

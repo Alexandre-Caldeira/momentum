@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './views/Home';
+
+import Routes from './routes';
+
+//TODO: use Perfect Scrollbar
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <Routes />
   </React.StrictMode>,
   document.getElementById('root')
 );

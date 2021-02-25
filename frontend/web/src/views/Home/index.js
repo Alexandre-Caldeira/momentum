@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './styles';
+import {Link} from 'react-router-dom';
 
 // Configs de comm com api backend
 import api from '../../services/api';
@@ -11,9 +12,11 @@ import FilterCard from '../../components/FilterCard';
 import GraphCard from '../../components/GraphCard';
 import TaskCard from '../../components/TaskCard';
 
+
 function Home() {
-    const [filterActive, setFilterActive] = useState('day');
+    const [filterActive, setFilterActive] = useState('today');
     const [tasks, setTasks] = useState([]);
+    const [lateCount, setLateCount] = useState();
 
     async function loadTasks(){
         await api.get(`/task/filter/${filterActive}/11:0a:11:11:11:11`)
@@ -22,22 +25,35 @@ function Home() {
                  })
     }
 
+    async function checkLate(){
+        await api.get(`/task/filter/late/11:0a:11:11:11:11`)
+                 .then(response => {
+                        setLateCount(response.data.length)
+                 })
+    }
+
+    function Notificar(){
+        setFilterActive('late')
+    }
+
     useEffect(() => {
         loadTasks();
+        checkLate();
+
     }, [filterActive]) 
 
     return (
         
         <S.Container>
-            <Header/>
+            <Header lateCount={lateCount} bellClick={Notificar}/>
 
             <S.FilterArea>
                 <button type="button" onClick={()=> setFilterActive('all')}>
                     <FilterCard title="/all" active={filterActive == 'all'} />
                 </button>
 
-                <button type="button" onClick={()=> setFilterActive('day')}>
-                    <FilterCard title="/day" active={filterActive == 'day'} />
+                <button type="button" onClick={()=> setFilterActive('today')}>
+                    <FilterCard title="/today" active={filterActive == 'today'} />
                 </button>
 
                 <button type="button" onClick={()=> setFilterActive('week')}>
@@ -60,16 +76,17 @@ function Home() {
             </S.FilterArea>
 
             <S.Title>
-                <h3>TASKS</h3>
+                <h3>{filterActive == 'late' ? 'LATE' : 'TASKS'}</h3>
             </S.Title>
 
             <S.Content>
                 {
                     tasks.map(t => (
-                        <TaskCard type={t.type} title={t.title} when={t.when}/>                           
+                        <Link to={`/task/${t._id}`}>
+                            <TaskCard type={t.type} title={t.title} when={t.when}/>                           
+                        </Link>
                     ))
                 }
-                
             </S.Content>
             
             <Footer/>

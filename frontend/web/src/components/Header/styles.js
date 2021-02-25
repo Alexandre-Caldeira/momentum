@@ -5,8 +5,9 @@ export const Container = styled.div `
     height: 60px;
     background: #7CDAC7;
     border-bottom: 8.1px solid #FF578E;
-
     display: flex;
+
+    
 `
 
 export const LeftSide = styled.div `
@@ -41,6 +42,7 @@ export const RightSide = styled.div `
         }
 
     }
+ 
 
     b {
         color: #707070;
@@ -51,6 +53,8 @@ export const RightSide = styled.div `
     }
 
     #notification {
+        cursor: pointer;
+        
         img{
             width: 42%;
             height: auto;
