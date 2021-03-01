@@ -12,7 +12,7 @@ export const Container = styled.div `
     border-radius: 37px;
     cursor: pointer;
 
-    diplay: flex;
+    display: flex;
     flex-wrap: wrap;
     position:relative;
     
@@ -37,7 +37,7 @@ export const Container = styled.div `
         right:20px;
     }
 
-    &: hover{
+    &:hover{
         background: #755AFC
     }
 

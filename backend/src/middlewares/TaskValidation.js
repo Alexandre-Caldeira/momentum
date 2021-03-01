@@ -26,10 +26,6 @@ const TaskValidation = async (req,res,next) => {
 
         return res.status(400).json({ error: ' Missing when (data é obrigatória!) '});
 
-    }else if (isPast(new Date(when))){
-
-        return res.status(400).json({ error: ' Past date (data é falsa!) '});
-
     }else{
         let exists;
 
@@ -49,6 +45,11 @@ const TaskValidation = async (req,res,next) => {
                 return res.status(400).json({ error: 'Task collision (horário cheio!)'});
             }
         }else{
+            if (isPast(new Date(when))){
+
+                return res.status(400).json({ error: ' Past date (data é falsa!) '});
+        
+            }
             exists = await TaskModel
                                 .findOne({ 
                                     'when': {'$eq': new Date(when)},

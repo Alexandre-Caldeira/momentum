@@ -16,12 +16,13 @@ export const Container = styled.div `
     justify-content: center;
     flex-direction: column;
 
-    &: hover {
+    &:hover {
         opacity: 0.5;
     }
     
     cursor: pointer;
     transition: all 0.3s ease;
+    opacity: ${props => props.done ? 0.5 : 1};
 `
 
 export const TopCard = styled.div `

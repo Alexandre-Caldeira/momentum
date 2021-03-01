@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './styles';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 // Configs de comm com api backend
 import api from '../../services/api';
+import isConnected from '../../utils/isConnected';
 
 // Componentes:
 import Header from '../../components/Header';
@@ -13,24 +14,20 @@ import GraphCard from '../../components/GraphCard';
 import TaskCard from '../../components/TaskCard';
 
 
+// test default mac 11:0a:11:11:11:11 
+
 function Home() {
     const [filterActive, setFilterActive] = useState('today');
     const [tasks, setTasks] = useState([]);
-    const [lateCount, setLateCount] = useState();
+    const [redirect, setRedirect] = useState(false);
 
     async function loadTasks(){
-        await api.get(`/task/filter/${filterActive}/11:0a:11:11:11:11`)
+        await api.get(`/task/filter/${filterActive}/${isConnected}`)
                  .then(response => {
                         setTasks(response.data)
                  })
     }
 
-    async function checkLate(){
-        await api.get(`/task/filter/late/11:0a:11:11:11:11`)
-                 .then(response => {
-                        setLateCount(response.data.length)
-                 })
-    }
 
     function Notificar(){
         setFilterActive('late')
@@ -38,14 +35,18 @@ function Home() {
 
     useEffect(() => {
         loadTasks();
-        checkLate();
+
+        if(!isConnected)
+            setRedirect(true);
 
     }, [filterActive]) 
 
     return (
         
         <S.Container>
-            <Header lateCount={lateCount} bellClick={Notificar}/>
+            {redirect && <Redirect to="/sync"/>}
+            
+            <Header bellClick={Notificar}/>
 
             <S.FilterArea>
                 <button type="button" onClick={()=> setFilterActive('all')}>
@@ -83,7 +84,7 @@ function Home() {
                 {
                     tasks.map(t => (
                         <Link to={`/task/${t._id}`}>
-                            <TaskCard type={t.type} title={t.title} when={t.when}/>                           
+                            <TaskCard type={t.type} title={t.title} when={t.when} done={t.done}/>                           
                         </Link>
                     ))
                 }

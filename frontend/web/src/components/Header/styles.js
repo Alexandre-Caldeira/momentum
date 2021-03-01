@@ -30,6 +30,22 @@ export const RightSide = styled.div `
     padding-top: 1%;
     justify-content: flex-end;
 
+    button {
+        font-family: Lucida Sans;
+        font-weight: bold;
+        font-size: 21px;
+        background: none;
+        border: none;
+        margin-top: -54px;
+        color: #000;
+        text-decoration: none;
+        outline:none;
+
+        &:hover {
+            color: #755AFC;
+        }
+    }
+
     a {
         color: #000;
         font-family: Lucida Sans;
@@ -37,7 +53,7 @@ export const RightSide = styled.div `
         font-size: 21px;
         text-decoration: none;
 
-        &: hover {
+        &:hover {
             color: #755AFC;
         }
 
@@ -60,7 +76,7 @@ export const RightSide = styled.div `
             height: auto;
             color: #FF578E;
 
-            &: hover{
+            &:hover{
                 opacity: 0.5;
             }
         }
@@ -76,7 +92,7 @@ export const RightSide = styled.div `
             right: 15%;
             font-family: Lucida Sans;
 
-            &: hover{
+            &:hover{
                 opacity: 0.5;
             }
         }
