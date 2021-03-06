@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
         width:'100%',
         height:84,
         backgroundColor: '#7CDAC7',
-        // borderTopWidth:10,
-        // borderTopColor: '#7CDAC7',
-        borderBottomWidth: 10.8,
+        borderTopWidth:20,
+        borderTopColor: '#7CDAC7',
+        borderBottomWidth: 5,
         borderBottomColor: '#FF578E',
         alignItems: 'center', // horizontal
         justifyContent: 'center' // vertical
@@ -20,16 +20,18 @@ const styles = StyleSheet.create({
     notification:{
        position: 'absolute',
        right:20,
+       bottom: 15
     },
     notificationText:{
         height: 43,
+        fontSize:12,
         fontWeight: 'bold',
         color: '#707070'
     },
     notificationImage:{
         tintColor: '#FF578E',
-        height: 27,
-        width: 26,
+        height: 25,
+        width: 24,
         resizeMode: 'contain'
     },
     circle:{
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         position: 'absolute',
-        left: 16,
-        bottom: 16
+        left: 15,
+        bottom: 15
     },
     leftIcon:{
         position: 'absolute',
@@ -50,7 +52,9 @@ const styles = StyleSheet.create({
      qr:{
         height: 24,
         width: 24,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        position:'absolute',
+        bottom: -20
     },
     back:{
         height: 24,
