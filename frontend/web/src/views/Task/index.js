@@ -12,6 +12,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import TypeIcons from '../../utils/typeIcons';
 
+//TODO: limitar tamanho do título
 //TODO: customize checkbox: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 function Task({match}) {
     const [type, setType] = useState();
@@ -21,7 +22,7 @@ function Task({match}) {
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
-    const [macaddress, setMacaddress] = useState('${isConnected}');
+    const [macaddress, setMacaddress] = useState(`${isConnected}`);
     var [redirect, setRedirect] = useState(false);
 
     async function LoadTaskDetail(){
@@ -102,13 +103,13 @@ function Task({match}) {
 
                 <S.Input>
                     <span>Title</span>
-                    <input type="text" placeholder="Task title" 
+                    <input type="text" placeholder="Task title" maxLength={30}
                            onChange = {e => setTitle(e.target.value)} value={title}/>
                 </S.Input>
                 
                 <S.TextArea>
                     <span>Description</span>
-                    <textarea rows={5} placeholder="Task details..."
+                    <textarea rows={5} placeholder="Task details..." maxLength={140}
                     onChange = {e => setDescription(e.target.value)} value={description}></textarea>
                 </S.TextArea>
 

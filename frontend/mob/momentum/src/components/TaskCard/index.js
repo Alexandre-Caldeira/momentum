@@ -2,18 +2,19 @@ import React from 'react';
 import {View,Text, Image, TouchableOpacity} from 'react-native';
 import { format } from 'date-fns';
 
-// Styles:
+// Styles
 import styles from './styles';
 
 // Icons
-import icDefault from '../../assets/ic-default.png';
+import typeIcons from '../../utils/typeIcons';
 
-export default function TaskCard({ done, title, when }){
+export default function TaskCard({ done, title, when, type, navigation,id}){
 
     return(
-        <TouchableOpacity style={[styles.container,done && styles.taskDone]}>
+        <TouchableOpacity onPressIn={()=>navigation.navigate('Task', {idtask: id})}
+        style={[styles.container,done && styles.taskDone]}>
                 <View style={styles.LeftSide}>
-                    <Image source={icDefault} style={styles.img}/>
+                    <Image source={typeIcons[type]} style={styles.img}/>
                     <Text style={styles.taskName}>{title}</Text>
                 </View>
                 <View style={styles.RightSide}>

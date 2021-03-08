@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', // horizontal
         justifyContent: 'flex-start', // vertical
         position: 'absolute',
-        top: 90
+        top: 100
     },
     filterText:{
         fontSize:12,

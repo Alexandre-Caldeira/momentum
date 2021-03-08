@@ -1,6 +1,7 @@
 // Packages
 import React, { useEffect, useState } from 'react';
-import { View, Text , ScrollView, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
+import { View, Text , ScrollView, TouchableOpacity, Image, ActivityIndicator, Alert} from 'react-native';
+import * as Network from 'expo-network';
 
 // Styles
 import styles from './styles';
@@ -17,36 +18,65 @@ import TaskCard from '../../components/TaskCard';
 // Backend (API)
 import api from '../../services/api'; 
 
-export default function Home(){
-    const [filter,setFilter] = useState('day');
+export default function Home({ navigation }){
+    const [filter,setFilter] = useState('today');
     const [tasks,setTasks] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [lateCount, setLateCount] = useState();
+    const [macaddress, setMacaddress] = useState();
+
+    async function getMacAddress(){
+        await Network.getMacAddressAsync().then(mac => {
+          setMacaddress(mac);
+        });
+      }
 
     async function loadTasks(){
         setLoading(true)
-        await api.get(`/task/filter/${filter}/11:0a:11:11:11:11`).then( response => {
+        await api.get(`/task/filter/${filter}/${macaddress}`).then( response => {
             setTasks(response.data)
             setLoading(false)
         });
     }
 
-    useEffect(()=> {
-        loadTasks();
-    },[filter])
+    async function lateVerify(){
+        await api.get(`/task/filter/late/${macaddress}`)
+        .then(response => {
+          setLateCount(response.data.length)      
+        });
+      }
 
+    async function LateTasks(){
+        setFilter('late')
+    }
+
+    function NewTask(){
+        navigation.navigate('Task')
+    }
+
+    function Show(id){
+        navigation.navigate('Task', {idtask: id});
+    }
+
+    useEffect(() => {
+        getMacAddress().then(() => {
+          loadTasks();
+        });
+        
+        lateVerify();
+    }, [filter, macaddress])
 
     return(
-        
         <View style={styles.container}>
-            <Header/>
+                <Header bellClick={LateTasks} showNotification={true} late={lateCount} navigation={navigation}/>
             
             <View style={styles.Filtercontainer}>
                 <TouchableOpacity onPress={()=> setFilter('all')}>
                     <Image source={filter=='all' ? filterOn : filterOff}/>
                     <Text style={styles.filterText}>/all</Text>
                 </TouchableOpacity>   
-                <TouchableOpacity onPress={()=> setFilter('day')}>
-                    <Image source={filter=='day' ? filterOn : filterOff}/>
+                <TouchableOpacity onPress={()=> setFilter('today')}>
+                    <Image source={filter=='today' ? filterOn : filterOff}/>
                     <Text style={styles.filterText}>/day</Text>
                 </TouchableOpacity>   
 
@@ -67,22 +97,32 @@ export default function Home(){
             </View>
 
             <View style={styles.title}>
-                <Text style={styles.titleText}> TASKS </Text>
+                <Text style={styles.titleText}>{filter=='late' ? 'LATE' : 'TASKS'}</Text>
             </View>
             
-            {loading ?
-                 <ActivityIndicator color={'#FF578E'}/>
-             :
-                <ScrollView style= {styles.content} contentContainerStyle={{alignItems:'center'}}>
-                    {
-                        tasks.map(t => 
-                        (
-                            <TaskCard done={false} title={t.title} when={t.when}/>
-                        ))
-                    }
-                </ScrollView>
-            }
-            <Footer icon={'add'}/>
+               {loading ?
+                    <ActivityIndicator color={'#FF578E'}/>
+                :
+                    <ScrollView style= {styles.content} contentContainerStyle={{alignItems:'center'}}>
+                        {
+                            tasks.map(t => 
+                            (
+                                <TaskCard 
+                                    key={t._id} 
+                                    done={t.done} 
+                                    title={t.title} 
+                                    when={t.when} 
+                                    type = {t.type}
+                                    id = {t._id}
+                                    navigation={navigation}
+                                    // ()=>navigation.navigate('Task', {idtask: t._id})  
+                                />
+                            ))
+                        }
+                    </ScrollView>
+                }
+            
+            <Footer icon={'add'} onPress={NewTask}/>
         </View>
     )
 }

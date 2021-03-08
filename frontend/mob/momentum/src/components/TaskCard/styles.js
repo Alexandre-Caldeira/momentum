@@ -19,8 +19,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.7,
         shadowRadius: 4,
         elevation: 6,
-        borderRadius: 10,
-
+        borderRadius: 10
     },
     LeftSide:{
         flex:1,

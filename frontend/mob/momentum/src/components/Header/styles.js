@@ -3,9 +3,9 @@ import { StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
     header:{
         width:'100%',
-        height:84,
+        height:100,
         backgroundColor: '#7CDAC7',
-        borderTopWidth:20,
+        // borderTopWidth:20,
         borderTopColor: '#7CDAC7',
         borderBottomWidth: 5,
         borderBottomColor: '#FF578E',
@@ -14,8 +14,9 @@ const styles = StyleSheet.create({
     },
     logo:{
         height: '50%',
-        width: '100%',
-        resizeMode: 'contain'
+        width: 200,
+        resizeMode: 'contain',
+        top: 15
     },
     notification:{
        position: 'absolute',
@@ -47,19 +48,20 @@ const styles = StyleSheet.create({
     },
     leftIcon:{
         position: 'absolute',
-        left: 20
+        left: 20,
+        bottom: 15
      },
      qr:{
-        height: 24,
-        width: 24,
+        height: 32,
+        width: 32,
         resizeMode: 'contain',
-        position:'absolute',
-        bottom: -20
+        position:'relative',
     },
     back:{
-        height: 24,
-        width: 24,
-        resizeMode: 'contain'
+        height: 30,
+        width: 30,
+        resizeMode: 'contain',
+        position: 'relative'
     }
 })
 
